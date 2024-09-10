@@ -248,6 +248,7 @@ function optimizeESMTask(opts, cjsOpts) {
                 format: 'esm',
                 plugins: [boilerplateTrimmer],
                 target: ['es2022'],
+                sourcemap: 'external',
                 loader: {
                     '.ttf': 'file',
                     '.svg': 'file',
@@ -390,12 +391,7 @@ function minifyTask(src, sourceMapBaseUrl) {
                     cb(undefined, f);
                 }
             }, cb);
-        }), jsFilter.restore, cssFilter, (0, postcss_1.gulpPostcss)([cssnano({ preset: 'default' })]), cssFilter.restore, svgFilter, svgmin(), svgFilter.restore, sourcemaps.mapSources((sourcePath) => {
-            if (sourcePath === 'bootstrap-fork.js') {
-                return 'bootstrap-fork.orig.js';
-            }
-            return sourcePath;
-        }), sourcemaps.write('./', {
+        }), jsFilter.restore, cssFilter, (0, postcss_1.gulpPostcss)([cssnano({ preset: 'default' })]), cssFilter.restore, svgFilter, svgmin(), svgFilter.restore, sourcemaps.write('./', {
             sourceMappingURL,
             sourceRoot: undefined,
             includeContent: true,

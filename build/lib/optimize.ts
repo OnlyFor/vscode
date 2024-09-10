@@ -336,6 +336,7 @@ function optimizeESMTask(opts: IOptimizeAMDTaskOpts, cjsOpts?: IOptimizeCommonJS
 				format: 'esm',
 				plugins: [boilerplateTrimmer],
 				target: ['es2022'],
+				sourcemap: 'external',
 				loader: {
 					'.ttf': 'file',
 					'.svg': 'file',
@@ -569,13 +570,6 @@ export function minifyTask(src: string, sourceMapBaseUrl?: string): (cb: any) =>
 			svgFilter,
 			svgmin(),
 			svgFilter.restore,
-			(<any>sourcemaps).mapSources((sourcePath: string) => {
-				if (sourcePath === 'bootstrap-fork.js') {
-					return 'bootstrap-fork.orig.js';
-				}
-
-				return sourcePath;
-			}),
 			sourcemaps.write('./', {
 				sourceMappingURL,
 				sourceRoot: undefined,
